@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Тест</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .answer {
+            margin-bottom: 10px;
+        }
+
+        #results {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button id="back-button">Назад</button>
+    <h1>Тест</h1>
+
+    <div id="quiz">
+    </div>
+
+    <button id="submit">Проверить</button>
+    <button id="hint">Подсказка</button>
+
+    <div id="results">
+        <h2>Результаты:</h2>
+        <p>Правильных ответов: <span id="correct-count">0</span></p>
+        <p>Неправильных ответов: <span id="incorrect-count">0</span></p>
+        <button id="reset">Начать заново</button>
+        <h3>Список правильных ответов:</h3>
+        <ul id="correct-answers"></ul>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "27 января 1944 года во время спектакля в Большом театре действие вдруг внезапно прервалось, опустился занавес, зажегся в зале свет, а на авансцену вышел директор театра.После реакции в зале на его сообщение возможность продолжить спектакль появилась только через полчаса.О чем сообщил директор театра?",
+                answers: ["Капитуляция Румынии", "О штурме Берлина", "О снятии блокады Ленинграда."],
+                correctAnswer: "О снятии блокады Ленинграда."
+            },
+            {
+                question: "Самый первый документ о В.И. Ленине (Ульянове) был подписан священником Василием Умовым и дьяконом Вл. Знаменским. О чем этот документ?",
+                answers: ["О том ,что он коммунист", "О его рождении", "О его болезни"],
+                correctAnswer: "О его рождении"
+            },
+            {
+                question: "Год начала Великой отечественной войны",
+                answers: ["1939", "1941", "1918"],
+                correctAnswer: "1941"
+            },
+            {
+                question: "Год начала Второй мировой войны (нападение Германии на Польщу)",
+                answers: ["1939", "1936", "1938"],
+                correctAnswer: "1939"
+            },
+            {
+                question: "Военный конфликт между Российской и Первой Французской империей, протекавший на территории России",
+                answers: ["Отечественная война 1779 года", "Отечественная война 1941 года", "Отечественная война 1812 года"],
+                correctAnswer: "Отечественная война 1812 года"
+            },
+            {
+                question: "Вспомните, как звали последнего царя Руси и первого Императора",
+                answers: ["Павел I", "Пётр I", "Александр I"],
+                correctAnswer: "Пётр I"
+            },
+            {
+                question: "Главный бог славян был", 
+                answers: ["Даждьбог", "Перун", "Велес"],
+                correctAnswer: "Перун"
+            },
+            {
+                question: "В 862 году начал править Русью:",
+                answers: ["Иван", "Игорь", "Рюрик"],
+                correctAnswer: "Рюрик"
+            },
+            {
+                question: "Последнего русского царя звали",
+                answers: ["Александр III", "Николай III", "Николай II"],
+                correctAnswer: "Николай II"
+            },
+            {
+                question: "Как зовут первого царя из династии Романовых?",
+                answers: ["Михаил", "Николай", "Иван"],
+                correctAnswer: "Михаил"
+            },
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const submitButton = document.getElementById('submit');
+        const hintButton = document.getElementById('hint');
+        const resultsDiv = document.getElementById('results');
+        const correctCountSpan = document.getElementById('correct-count');
+        const incorrectCountSpan = document.getElementById('incorrect-count');
+        const resetButton = document.getElementById('reset');
+        const correctAnswersList = document.getElementById('correct-answers');
+
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+
+        function buildQuiz() {
+            const question = questions[currentQuestionIndex];
+            const questionHtml = `
+                <div class="question">
+                  <h3>${question.question}</h3>
+                  ${question.answers.map(answer => `
+                    <div class="answer">
+                      <input type="radio" name="answer" value="${answer}">
+                      <label for="${answer}">${answer}</label>
+                    </div>
+                  `).join('')}
+                </div>
+              `;
+
+            quizContainer.innerHTML = questionHtml;
+        }
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+
+            if (selectedAnswer === questions[currentQuestionIndex].correctAnswer) {
+                correctCount++;
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                buildQuiz();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            resultsDiv.style.display = 'block';
+            correctCountSpan.textContent = correctCount;
+            incorrectCountSpan.textContent = questions.length - correctCount;
+
+            submitButton.disabled = true;
+            hintButton.disabled = true;
+
+            
+            questions.forEach(question => {
+                const answerItem = document.createElement('li');
+                answerItem.textContent = `${question.question}: ${question.correctAnswer}`;
+                correctAnswersList.appendChild(answerItem);
+            });
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            correctCount = 0;
+            buildQuiz();
+            resultsDiv.style.display = 'none';
+            submitButton.disabled = false;
+            hintButton.disabled = false;
+            correctAnswersList.innerHTML = ''; 
+        }
+
+        function showHint() {
+            alert(`Подсказка: Правильный ответ - ${questions[currentQuestionIndex].correctAnswer}`);
+        }
+
+        buildQuiz();
+
+        submitButton.addEventListener('click', checkAnswer);
+        hintButton.addEventListener('click', showHint);
+        resetButton.addEventListener('click', resetQuiz);
+        const backButton = document.getElementById('back-button');
+
+        backButton.addEventListener('click', () => {
+            window.location.href = 'index.html'; 
+        });
+    </script>
+
+</body>
+</html>
