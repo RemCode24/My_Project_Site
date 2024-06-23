@@ -1,0 +1,83 @@
+.banner2 {
+    background-image: url(../images/oct13.jpg);
+    background-position: center top;
+    background-repeat: no-repeat;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    min-height: 750px;
+}
+.banner3 {
+    background-image: url(../images/tank.gif);
+    background-position: center top;
+    background-repeat: no-repeat;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    min-height: 750px;
+}
+
+
+
+
+.TMKcss h2 {
+    font-family: sans-serif;
+    color: white;
+    margin: 0px;
+    margin-left: 0px;
+}
+  .TMKcss p {
+    font-family: Andale Mono, monospace;
+    color: #ffffff;
+    margin-left: 10px;
+ }
+
+ .TMKcss2 p {
+    font-family: Andale Mono, monospace;
+    color: #ffffff;
+    margin-left: 10px;
+ }
+ .TMKcss2 h2{
+    font-family: sans-serif;
+    color:white;
+    margin: 0px;
+    margin-left: 10px;
+  }
+.TMKcss .text-with-background {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.TMKcss2 .text-with-background {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+ .mus {
+    margin-left: 15px; /* Замените значение на нужное Вам смещение */
+  }
+@media (max-width: 1500px) {
+   .TMKcss h2 {
+        font-family: sans-serif;
+        color: white;
+        margin: 0px;
+        margin-left: 350px;
+    }
+
+    .TMKcss p {
+        font-family: Andale Mono, monospace;
+        color: #ffffff;
+        margin-left: 350px;
+    }
+    .TMKcss2 p {
+        font-family: Andale Mono, monospace;
+        color: #ffffff;
+        margin-left: 350px;
+    }
+
+    .TMKcss2 h2 {
+        font-family: sans-serif;
+        color: white;
+        margin: 0px;
+        margin-left: 350px;
+    }
+  
+}
